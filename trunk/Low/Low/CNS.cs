@@ -45,13 +45,41 @@ namespace Low
       }
     }
 
+    /// <summary>
+    /// L003 Общий алгоритм
+    /// </summary>
     public void React()
+    {
+      //L004
+      if (!L003_learningComplete)
+        ReactLearning();
+      else
+        ReactDefault();
+    }
+
+    /// <summary>
+    /// L003 индикатор окончания этапа обучения
+    /// </summary>
+    private bool L003_learningComplete = false;
+
+    /// <summary>
+    /// L004 Алгоритм этапа обучения
+    /// </summary>
+    private void ReactLearning()
     {
       int section = 0;
       int effIndex = 0;
-      
+
       ISection sec = myCr.GetSection(section);
-      sec.SetEffector(effIndex, BoundValue.MaxValue);
+      sec.SetEffector(effIndex, BoundValue.MaxValue);      
+    }
+    //private
+
+    /// <summary>
+    /// L005 Алгоритм этапа реакция 
+    /// </summary>
+    private void ReactDefault()
+    {
     }
 
     public void DoPrediction()
