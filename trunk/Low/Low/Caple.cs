@@ -61,6 +61,14 @@ namespace Low
 
     //ICreature        
     #region ICreature Members
+    public CreatureState GetState()
+    {
+      return CreatureState.JUST_ADDED_OR_MOVED;
+    }
+
+    public void EnvironmentAffected()
+    { }
+    
     public int SectionsCount()
     {
       return 1;
@@ -78,8 +86,7 @@ namespace Low
     }
         
     public void React()
-    {
-      MyCNS.React();
+    {     
       Refresh();
     }
     

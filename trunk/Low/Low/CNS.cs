@@ -3,32 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Low
-{
-  public interface ISection
-  {
-    string GetSectionsName();
-    int GetEffectorsCount();
-    int GetSensorsCount();
-    int GetGoalSensorsCount();
-    double GetEffector(int index);
-    string GetEffectorsName(int index);
-    double GetSensor(int index);
-    string GetSensorsName(int index);
-    double GetGoalSensor(int index);
-    string GetGoalSensorsName(int index);
-    void SetEffector(int index, double value);
-  }
-
-  public interface ICreature
-  {
-    int SectionsCount();
-    ISection GetSection(int index);
-    void DoPrediction();
-    void Advantage();
-    void CheckPrediction();
-    void React();
-  }
-
+{ 
   public class CNS
   {
     public CNS(ICreature cr)
@@ -43,64 +18,254 @@ namespace Low
         Section section = new Section(sec, this);
         sections.Add(section);
       }
+
+      reactAlg = new ReactAlg(sections);   
     }
 
     /// <summary>
-    /// L003 Общий алгоритм
+    /// Влияние среды произошло
+    /// Перейти в следующий момент времени
     /// </summary>
-    public void React()
+    public void NotifyEnvironmentAffected()
     {
-      //L004
-      if (!L003_learningComplete)
-        ReactLearning();
-      else
-        ReactDefault();
-    }
+      if (myCr.GetState() != CreatureState.ENVIRONMENT_AFFECTED)
+        throw new Exception("Невыполнение кричем условий последовательности вызова {59BB9671-9861-4238-A276-278298A120CB}");
 
-    /// <summary>
-    /// L003 индикатор окончания этапа обучения
-    /// </summary>
-    private bool L003_learningComplete = false;
+      //{{ пропустить операции с памятью и проверку прогноза в первый момент жизни существования крича
+      if (CurrentTick > 0) 
+      {
+        //установить память        
+        foreach (Section s in sections)
+          s.Advantage();
+      
+        //Проверить правильность прогноза значениев сенсоров
+        bool result = true;
+        foreach (Section s in sections)
+        {
+          if (!s.CheckPredictors())
+            result = false;
+        }
+        //оповестить алгоритм реакции,как отработали предикторы      
+        reactAlg.NotifyPredictorsResult(result);
+      }
+      //}}пропустить операции с памятью и проверку прогноза в первый момент жизни существования крича
 
-    /// <summary>
-    /// L004 Алгоритм этапа обучения
-    /// </summary>
-    private void ReactLearning()
-    {
-      int section = 0;
-      int effIndex = 0;
-
-      ISection sec = myCr.GetSection(section);
-      sec.SetEffector(effIndex, BoundValue.MaxValue);      
-    }
-    //private
-
-    /// <summary>
-    /// L005 Алгоритм этапа реакция 
-    /// </summary>
-    private void ReactDefault()
-    {
-    }
-
-    public void DoPrediction()
-    {
+      //L003 Алгоритм реакции в зависимости от текущего этапа
+      reactAlg.Execute();
+      
+      //Прогнозировать значения сенсоров    
       foreach (Section s in sections)
         s.DoPrediction();
-    }
 
-    public void Advantage()
-    {
       ++fCurrentTick;
-      foreach (Section s in sections)
-        s.Advantage();
     }
-
-    public void CheckPrediction()
+        
+    //L003 Алгоритм реакции в зависимости от текущего этапа
+    private ReactAlg reactAlg;    
+    /// <summary>
+    /// L003 Алгоритм реакции в зависимости от текущего этапа
+    /// </summary>
+    private class ReactAlg
     {
-      foreach (Section s in sections)
-        s.CheckPredictors();
-    }
+      public ReactAlg(List<Section> sections)
+      {
+        this.sections = sections;
+        curState = new StateGenesis(sections);
+      }
+      public void Execute()
+      {
+        curState.Execute();
+      }      
+      public void NotifyPredictorsResult(bool result)
+      {
+        predictorsWorkedWell = result;
+        if (result)
+        { //если прогноз верен
+          if (curState is StateGenesis)
+          { //если текущее состояние ЦНС стартовое
+            curState = new StateLearning(sections, IsPredictorsWorkedWell, NotifyLearningIsDone);//перейти в состояние обучения
+            return;
+          }
+        }
+        else
+        { //если прогноз неверен
+        }
+      }
+      private bool predictorsWorkedWell = false;
+      private bool IsPredictorsWorkedWell() { return predictorsWorkedWell; }
+      //оповестить, что этап обучения закончен
+      private void NotifyLearningIsDone()
+      {
+        curState = new StateNormal(sections);
+        curState.Execute();
+      }
 
+      private List<Section> sections;
+            
+      //сосояние ЦНС L003
+      private State curState;
+      //базовый класс для состояния ЦНС L003
+      private abstract class State
+      {
+        protected List<Section> sections;
+        public State(List<Section> sections)
+        {
+          this.sections = sections;
+        }
+        public abstract void Execute();
+      }      
+      //стартовое состояние L003
+      private class StateGenesis : State
+      {
+        public StateGenesis(List<Section> sections) : base(sections) { }
+        public override void Execute()
+        { 
+          //ничего не делать в стартовом состоянии
+        }
+      }
+      //этап обучения L004
+      private class StateLearning : State
+      {
+        public StateLearning(List<Section> sections, BoolDelegate IsPredictorsWorkedWell, VoidDelegate NotifyLearningIsDone)
+          : base(sections) 
+        {
+          this.NotifyLearningIsDone = NotifyLearningIsDone;
+          this.IsPredictorsWorkWell = IsPredictorsWorkedWell;
+        }       
+        public override void Execute()
+        {
+          //{создать список диапозонов значений, которые были присвоены эффекторам
+          if (L004_effectorsValues == null)
+          { //эффекторы еще не были ни разу установлены        
+            L004_effectorsValues = new List<EffInterval>();
+            foreach (Section s in sections)
+            {
+              for (int i = 0; i < s.GetEffectorsCount(); ++i)
+              {
+                double eff = s.GetEffectorValue(i);                
+                EffInterval effValue = new EffInterval(s, i,  eff, eff);
+                L004_effectorsValues.Add(effValue);
+              }
+            }
+          }
+          //}создать список диапозонов значений, которые были присвоены эффекторам
+                    
+          
+          //GEN 
+          //можно определить приоритет обучения эффекторов
+          if (L004_effectorsValues.Count == 0) return;          
+          if (L004_currentEffector == null)          
+            L004_currentEffector = L004_effectorsValues[0];
+          
+          //если предикторы отработали нормально, можно изменить эффектор
+          if (IsPredictorsWorkWell())
+          {
+            if (L004_currentEffector.SetNextValue()) 
+              return;
+            
+            //установить следующий эффектор
+            for (int i = 0; i < L004_effectorsValues.Count; ++i)
+            {
+              EffInterval effInt = L004_effectorsValues[i];
+              if (effInt.IsDone()) continue;
+              else              
+              {
+                L004_currentEffector = effInt;
+                break;
+              }
+            }
+            if (L004_currentEffector.SetNextValue())
+              return;
+
+            //если все эффекторы перебраны - перейти в штатный режим
+            NotifyLearningIsDone();
+          }
+
+          //ISection sec = myCr.GetSection(section);
+          //sec.SetEffector(effIndex, BoundValue.MaxValue);  
+        }
+
+        private BoolDelegate IsPredictorsWorkWell;
+        private VoidDelegate NotifyLearningIsDone;
+
+        // Диапазон значений, в которые были установлены эффекторы    
+        private List<EffInterval> L004_effectorsValues = null;
+        //Текущий проверяемый эффектор
+        private EffInterval L004_currentEffector = null;        
+        
+        // Интервал значений эффектора        
+        private class EffInterval
+        {
+          /// <summary>
+          /// Заданные значения эффектора
+          /// </summary>
+          /// <param name="mySec">Секция эффектора</param>
+          /// <param name="effectorIndex">Индекс эффектора</param>
+          /// <param name="bottom">Нижнее значение</param>
+          /// <param name="top">Верхнее значение</param>
+          public EffInterval(Section mySec, int effectorIndex, double bottom, double top)
+          {
+            this.bottom = bottom;
+            this.top = top;
+            this.mySec = mySec;
+            this.effectorIndex = effectorIndex;
+          }
+          public double top;
+          public double bottom;
+          /// <summary>
+          /// Установить эффектор в следующее значение
+          /// </summary>
+          /// <returns>False - если все значения уже перебраты</returns>
+          public bool SetNextValue()
+          {
+            //GEN можно определить направление и значение эффектора на этапе обучения
+
+            if (done) return false;
+
+            const double learningEffectorDeltaValue = BoundValue.MaxValueModal / 20;
+
+            if (top < BoundValue.MaxValue)
+            {
+              if (top + learningEffectorDeltaValue > BoundValue.MaxValue)              
+                top = BoundValue.MaxValue;
+              else 
+                top += learningEffectorDeltaValue;
+
+              mySec.SetEffectorValue(effectorIndex, top);
+              return true;
+            }
+
+            if (bottom < BoundValue.MinValue)
+            {
+              if (bottom - learningEffectorDeltaValue > BoundValue.MinValue)
+                bottom = BoundValue.MinValue;
+              else
+                bottom -= learningEffectorDeltaValue;
+
+              mySec.SetEffectorValue(effectorIndex, bottom);
+              return true;
+            }
+
+            done = true;
+            return false;
+          }
+          public bool IsDone() { return done; }
+          //если уже перебраты все значения эффектора
+          bool done = false;
+          private int effectorIndex;
+          private Section mySec;
+        };
+      }
+      //штатное состояние L005
+      private class StateNormal : State
+      {
+        public StateNormal(List<Section> sections) : base(sections) { }
+        public override void Execute()
+        {
+        }
+      }
+    }
+        
     private ICreature myCr;
     private List<Section> sections = new List<Section>();
 
@@ -180,33 +345,40 @@ namespace Low
         sn.DoPrediction();
     }
 
-    public void CheckPredictors()
+    public bool CheckPredictors()
     {
+      bool result = true;
       foreach (Sensor sn in sensors)
-        sn.CheckPrediction();
+      {
+        if (!sn.CheckPrediction())
+          result = false; //если хоть один сенсор спрогнозирован неправильно - вся секция неправильная
+      }
       foreach (Sensor sn in tSensors)
-        sn.CheckPrediction();
-    }
-
-    public void SetEffectorValue(int index, double value)
-    {
-      mySec.SetEffector(index, value);
+      {
+        if (!sn.CheckPrediction())
+          result = false; //если хоть один сенсор спрогнозирован неправильно - вся секция неправильная
+      }
+      return result;
     }
 
     private CNS myCns;
     private ISection mySec;
         
     private List<double>[] sensorsMem;
-    public List<Sensor> sensors = new List<Sensor>();
+    private List<Sensor> sensors = new List<Sensor>();
+    public int GetSensorsCount() { return mySec.GetSensorsCount(); }
     public double GetSensorValue(int index) { return mySec.GetSensor(index); }
         
     private List<double>[] tSensorsMem;
-    public List<Sensor> tSensors = new List<Sensor>();
+    private List<Sensor> tSensors = new List<Sensor>();
+    public int GetTSensorsCount() { return mySec.GetGoalSensorsCount(); }
     public double GetTSensorValue(int index) { return mySec.GetGoalSensor(index); }
 
     private List<double>[] effsMem;
-    public List<Effector> effs = new List<Effector>();
+    private List<Effector> effs = new List<Effector>();
+    public int GetEffectorsCount() { return mySec.GetEffectorsCount(); }
     public double GetEffectorValue(int index) { return mySec.GetEffector(index); }
+    public void SetEffectorValue(int index, double value) { mySec.SetEffector(index, value); }
 
     public double CurrentTick { get { return myCns.CurrentTick; } }
   }
@@ -231,20 +403,21 @@ namespace Low
     public Sensor(int index, Section mySec, bool thisIsTarget)
       : base(index, mySec)
     {
-      this.thisIsTarget = thisIsTarget;
-      pm = new Predictor(mySec, this);
+      this.thisIsTarget = thisIsTarget;      
     }
 
     //этап первый - сделать предикцию
     public void DoPrediction()
     {
+      if (pm == null)
+        pm = new Predictor(mySec, this);
       pm.DoPrediction();
     }
 
     //этап второй - сравнить, произвести запись в память
-    public void CheckPrediction()
+    public bool CheckPrediction()
     {
-      pm.CheckPrediction();
+      return pm.CheckPrediction();
     }
 
     public override double CurrentValue

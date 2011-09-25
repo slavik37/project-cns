@@ -10,15 +10,6 @@ namespace Low
 {
   public partial class Bug : Control, ISkotina_10 
   {
-    s0 s0lu;
-    s0 s1ru;
-    s1 s2rd;
-    s2 s3ld;
-    sS0 s4S0;
-    sS1 s5S1;
-
-    CNS myCNS;
-
     public Bug()
     {
       InitializeComponent();
@@ -30,13 +21,84 @@ namespace Low
       s3ld.SetTwin(s2rd.mySection);
       s4S0 = new sS0("ad");
       s5S1 = new sS1("G");
+      myState = CreatureState.JUST_ADDED_OR_MOVED;
       myCNS = new CNS(this);
     }
 
     public CNS GetMyCNS()
     {
       return myCNS;
+    }  
+
+    #region ICreature Members
+
+    public int SectionsCount() { return 6; }
+
+    public ISection GetSection(int index)
+    {
+      switch (index)
+      {
+        case 0: return s0lu;
+        case 1: return s1ru;
+        case 2: return s2rd;
+        case 3: return s3ld;
+        case 4: return s4S0;
+        case 5: return s5S1;
+        default: throw new ArgumentOutOfRangeException();
+      }
     }
+    
+    public void Advantage()
+    {
+      if (myState != CreatureState.CREATURE_REACTED)
+        throw new Exception("Невыполнение средой условий последовательности вызова {0BEE6BB2-AF26-4FE5-B2A6-65B84227B77E}");
+
+      s0lu.Advantage();
+      s1ru.Advantage();
+      s2rd.Advantage();
+      s3ld.Advantage();
+
+      myState = CreatureState.JUST_ADDED_OR_MOVED;
+    }
+
+    public void EnvironmentAffected()
+    {
+      if (myState != CreatureState.JUST_ADDED_OR_MOVED)
+        throw new Exception("Невыполнение средой условий последовательности вызова {E1E39E8B-F0B6-4215-B7D3-1BBA8A1661CA}");
+
+      myState = CreatureState.ENVIRONMENT_AFFECTED;
+      myCNS.NotifyEnvironmentAffected();
+      myState = CreatureState.CREATURE_REACTED;
+    }
+    
+    public CreatureState GetState()
+    {
+      return myState;
+    }    
+    #endregion  
+
+    #region ISkotina_10 Members
+
+    public void SetFeedVector(double angle, double distance)
+    {
+      if (myState != CreatureState.JUST_ADDED_OR_MOVED)
+        throw new Exception("Невыполнение средой условий последовательности вызова {20F79A4C-F084-42E4-AAB0-90AB56A35346}");
+
+      Target trg = new Target();
+      trg.angle = angle;
+      trg.distance = distance;
+      s4S0.SetTarget(trg);
+    }
+
+    public void SetTarget(double value)
+    {
+      if (myState != CreatureState.JUST_ADDED_OR_MOVED)
+        throw new Exception("Невыполнение средой условий последовательности вызова {BDC0C899-2D96-4877-BA0A-57EC74F461EF}");
+
+      s5S1.SetTarget(value);
+    }
+
+    #endregion
 
     protected override void OnPaint(PaintEventArgs pe)
     {
@@ -67,69 +129,19 @@ namespace Low
 
       pe.Graphics.FillRectangle(rsb,
         (int)(cx + lineWidth_), (int)(cy + lineWidth_),
-        (int)(halfwidth * 2), (int)(halfheight * 2));      
+        (int)(halfwidth * 2), (int)(halfheight * 2));
       base.OnPaint(pe);
     }
 
-    #region ICreature Members
+    s0 s0lu;
+    s0 s1ru;
+    s1 s2rd;
+    s2 s3ld;
+    sS0 s4S0;
+    sS1 s5S1;
+    CreatureState myState;
 
-    public int SectionsCount() { return 6; }
-
-    public ISection GetSection(int index)
-    {
-      switch (index)
-      {
-        case 0: return s0lu;
-        case 1: return s1ru;
-        case 2: return s2rd;
-        case 3: return s3ld;
-        case 4: return s4S0;
-        case 5: return s5S1;
-        default: throw new ArgumentOutOfRangeException();
-      }
-    }
-
-    public void DoPrediction()
-    {
-      myCNS.DoPrediction();
-    }
-
-    public void Advantage()
-    {      
-      s0lu.Advantage();
-      s1ru.Advantage();
-      s2rd.Advantage();
-      s3ld.Advantage();
-      myCNS.Advantage();
-    }
-
-    public void CheckPrediction()
-    {
-      myCNS.CheckPrediction();
-    }
-
-    public void React()
-    {
-      myCNS.React();
-    }
-    #endregion  
-
-    #region ISkotina_10 Members
-
-    public void SetFeedVector(double angle, double distance)
-    {
-      Target trg = new Target();
-      trg.angle = angle;
-      trg.distance = distance;
-      s4S0.SetTarget(trg);
-    }
-
-    public void SetTarget(double value)
-    {
-      s5S1.SetTarget(value);
-    }
-
-    #endregion
+    CNS myCNS;
   }
 
   public class s0: ISection 
