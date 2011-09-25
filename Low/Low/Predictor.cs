@@ -12,11 +12,11 @@ namespace Low
       this.mySect = mySect;
       this.mySens = mySens;
       this.entries = new List<PredictorEntry>();
-      this.predictedValue = 0.0;
+      this.predictedValue = mySens.CurrentValue;
       this.predictedForTick = int.MaxValue;
 
       List<Interval> intervals = new List<Interval>();
-      intervalsCount = mySect.effs.Count + mySect.sensors.Count + mySect.tSensors.Count;
+      intervalsCount = mySect.GetEffectorsCount() + mySect.GetSensorsCount() + mySect.GetTSensorsCount();
 
       for (int i = 0; i < intervalsCount; ++i)
         intervals.Add(
@@ -36,12 +36,12 @@ namespace Low
         return;
 
       List<double> intervals = new List<double>();
-      foreach (Effector eff in mySect.effs)
-        intervals.Add(eff.CurrentValue);
-      foreach (Sensor s in mySect.sensors)
-        intervals.Add(s.CurrentValue);
-      foreach (Sensor ts in mySect.tSensors)
-        intervals.Add(ts.CurrentValue);
+      for (int i = 0; i < mySect.GetEffectorsCount(); ++i)
+        intervals.Add(mySect.GetEffectorValue(i));
+      for (int i = 0; i < mySect.GetSensorsCount(); ++i)
+        intervals.Add(mySect.GetSensorValue(i));
+      for (int i = 0; i < mySect.GetTSensorsCount(); ++i)
+        intervals.Add(mySect.GetTSensorValue(i));
       var query = entries.Where(entry =>
       {
         for (int i = 0; i < intervalsCount; ++i)

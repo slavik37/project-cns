@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Low
 {
+  public delegate bool BoolDelegate();
+  public delegate void VoidDelegate();
+
   public class BoundValue
   {
     public const double MinValue = -100.0;
