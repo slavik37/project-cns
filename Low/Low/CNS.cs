@@ -52,14 +52,14 @@ namespace Low
 
       //L003 Алгоритм реакции в зависимости от текущего этапа
       reactAlg.Execute();
-      
+
       //Прогнозировать значения сенсоров    
       foreach (Section s in sections)
         s.DoPrediction();
 
       ++fCurrentTick;
     }
-        
+
     //L003 Алгоритм реакции в зависимости от текущего этапа
     private ReactAlg reactAlg;    
     /// <summary>
@@ -222,7 +222,7 @@ namespace Low
 
             if (done) return false;
 
-            const double learningEffectorDeltaValue = BoundValue.MaxValueModal / 20;
+            const double learningEffectorDeltaValue = BoundValue.MaxValueModal / 200;
 
             if (top < BoundValue.MaxValue)
             {
