@@ -160,15 +160,15 @@ namespace Low
           //если предикторы отработали нормально, можно изменить эффектор
           if (IsPredictorsWorkWell())
           {
-            if (L004_currentEffector.SetNextValue()) 
+            if (L004_currentEffector.SetNextValue())
               return;
-            
+
             //установить следующий эффектор
             for (int i = 0; i < L004_effectorsValues.Count; ++i)
             {
               EffInterval effInt = L004_effectorsValues[i];
               if (effInt.IsDone()) continue;
-              else              
+              else
               {
                 L004_currentEffector = effInt;
                 break;
@@ -179,6 +179,10 @@ namespace Low
 
             //если все эффекторы перебраны - перейти в штатный режим
             NotifyLearningIsDone();
+          }
+          else //****предикторы отработали неправильно
+          {
+            
           }
 
           //ISection sec = myCr.GetSection(section);
