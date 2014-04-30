@@ -1,0 +1,15 @@
+﻿<Window x:Class="WinApp.Shell.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:regions="http://www.codeplex.com/CompositeWPF"
+        xmlns:interfaces="clr-namespace:MemOrg.Interfaces;assembly=MemOrg.Interfaces"
+        Title="Shell">
+
+    <Grid>
+        <ContentControl
+            regions:RegionManager.RegionName="{x:Static interfaces:RegionNames.MainViewRegion}"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+        </ContentControl>
+    </Grid>
+</Window>
