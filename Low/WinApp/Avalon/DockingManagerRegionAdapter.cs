@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Regions;
+﻿using Microsoft.Practices.Prism.Regions;
 using Xceed.Wpf.AvalonDock;
 
-namespace MemOrg.WinApp.Avalon
+namespace WinApp.Avalon
 {
     class DockingManagerRegionAdapter : RegionAdapterBase<DockingManager>
     {

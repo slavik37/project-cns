@@ -2,9 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:regions="http://www.codeplex.com/CompositeWPF"
-        xmlns:interfaces="clr-namespace:MemOrg.Interfaces;assembly=MemOrg.Interfaces"
+        xmlns:interfaces="clr-namespace:Interfaces;assembly=Interfaces"
         Title="Shell">
-
     <Grid>
         <ContentControl
             regions:RegionManager.RegionName="{x:Static interfaces:RegionNames.MainViewRegion}"

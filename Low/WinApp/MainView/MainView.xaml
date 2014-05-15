@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MemOrg.WinApp.MainView.MainView"
+﻿<UserControl x:Class="WinApp.MainView.MainView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:layout="http://schemas.xceed.com/wpf/xaml/avalondock"
-             xmlns:intr="clr-namespace:MemOrg.Interfaces;assembly=MemOrg.Interfaces"
-             xmlns:local="clr-namespace:MemOrg.WinApp.Avalon"
-             xmlns:mainView="clr-namespace:MemOrg.WinApp.MainView"
+             xmlns:intr="clr-namespace:Interfaces;assembly=Interfaces"
+             xmlns:avalon="clr-namespace:WinApp.Avalon"
+             xmlns:mainView="clr-namespace:WinApp.MainView"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600">
 
     <Grid d:DataContext="{d:DesignInstance mainView:MainViewViewModel}">
@@ -17,10 +17,8 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
-                <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
-                <MenuItem Header="Clear" Command="{Binding ClearCommand}"/>
-                <MenuItem Header="Refresh" Command="{x:Static intr:GlobalCommands.RefreshGraphViewCompositeCommand}" />
+                <MenuItem Header="Import"/>
+                <MenuItem Header="Export"/>
                 <Separator/>
                 <MenuItem Header="Exit"/>
             </MenuItem>
@@ -36,22 +34,14 @@
                         <layout:LayoutDocumentPane>
                             
                             <layout:LayoutDocument Title="Graph"
-                                                   local:AvalonDockRegion.DocName ="{x:Static intr:RegionNames.GraphViewerRegion}">
+                                                   avalon:AvalonDockRegion.DocName ="{x:Static intr:RegionNames.MainViewRegion}">
                             </layout:LayoutDocument>
                         </layout:LayoutDocumentPane>
                     </layout:LayoutDocumentPaneGroup>
-                        <layout:LayoutDocumentPaneGroup>
-                            <layout:LayoutDocumentPane>
-
-                                <layout:LayoutDocument Title="Chapter"
-                                                   local:AvalonDockRegion.DocName ="{x:Static intr:RegionNames.ChapterViewerRegion}">
-                                </layout:LayoutDocument>
-                            </layout:LayoutDocumentPane>
-                        </layout:LayoutDocumentPaneGroup>
                     </layout:LayoutPanel>
                     <layout:LayoutAnchorablePaneGroup DockWidth="150" Orientation="Vertical">
                         <layout:LayoutAnchorablePane>
-                            <layout:LayoutAnchorable Title="Tool 1" local:AvalonDockRegion.AnchorName="{x:Static intr:RegionNames.TempToolbarRegion}">
+                            <layout:LayoutAnchorable Title="Tool 1">
                             </layout:LayoutAnchorable>
                             <layout:LayoutAnchorable Title="Tool 2">
                             </layout:LayoutAnchorable>
