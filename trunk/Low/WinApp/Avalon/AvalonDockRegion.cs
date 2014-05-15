@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows;
-using MemOrg.WinApp;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.Regions.Behaviors;
 using Microsoft.Practices.ServiceLocation;
 using Xceed.Wpf.AvalonDock.Layout;
 
-namespace MemOrg.WinApp.Avalon
+namespace WinApp.Avalon
 {
     class AvalonDockRegion : DependencyObject
     {

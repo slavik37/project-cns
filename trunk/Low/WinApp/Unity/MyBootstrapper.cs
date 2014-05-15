@@ -1,20 +1,34 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using MemOrg.WinApp.Avalon;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+using WinApp.Avalon;
 
 namespace WinApp.Unity
 {
-    public class Bootstrapper : UnityBootstrapper
+    public class MyBootstrapper : Microsoft.Practices.Prism.Bootstrapper
     {
+        public override void Run(bool runWithDefaultConfiguration)
+        {
+            throw new System.NotImplementedException();
+        }
+
         protected override DependencyObject CreateShell()
         {
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion(Interfaces.RegionNames.MainViewRegion, typeof(MemOrg.WinApp.MainView.MainView));
+            regionManager.RegisterViewWithRegion(Interfaces.RegionNames.MainViewRegion, typeof(MainView.MainView));
             regionManager.RegisterViewWithRegion(Interfaces.RegionNames.TempToolbarRegion, typeof(TempToolbar.ContentView));
             
             Container.RegisterType<ITmpXmlExportImportService, TmpXmlExportImportService.TmpXmlExportImportService>();
 
             return Container.Resolve<Shell.Shell>();
+        }
+
+        protected override void ConfigureServiceLocator()
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override void InitializeShell()
@@ -45,14 +59,7 @@ namespace WinApp.Unity
 
         protected override void ConfigureModuleCatalog()
         {
-            AddModule<GraphServiceModule>();
-            AddModule<GraphDrawServiceModule>();
-            AddModule<GraphOrganizeServiceModule>();
-            AddModule<GraphVisualizeServiceModule>();
-            AddModule<GraphViewerModule>();
-            AddModule<GraphManagementServiceModule>();
-            AddModule<TempToolbarModule>();
-            AddModule<ChapterViewerModule>();
+            //AddModule<GraphServiceModule>();
         }
 
         private void AddModule<T>() where T : IModule

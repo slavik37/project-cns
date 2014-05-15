@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace MemOrg.WinApp.MainView
+namespace WinApp.MainView
 {
     /// <summary>
     /// Interaction logic for MainView.xaml
