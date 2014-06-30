@@ -1,41 +1,35 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using MemOrg.WinApp.Avalon;
+using CnsService.ModuleDefinition;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using OutputScreen.ModuleDefinition;
+using SomeToolbar.ModuleDefinition;
 using WinApp.Avalon;
+using WorldService.ModuleDefinition;
+using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace WinApp.Unity
 {
-    public class MyBootstrapper : Microsoft.Practices.Prism.Bootstrapper
+    public class MyBootstrapper : UnityBootstrapper
     {
-        public override void Run(bool runWithDefaultConfiguration)
-        {
-            throw new System.NotImplementedException();
-        }
-
         protected override DependencyObject CreateShell()
         {
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion(Interfaces.RegionNames.MainViewRegion, typeof(MainView.MainView));
-            regionManager.RegisterViewWithRegion(Interfaces.RegionNames.TempToolbarRegion, typeof(TempToolbar.ContentView));
             
-            Container.RegisterType<ITmpXmlExportImportService, TmpXmlExportImportService.TmpXmlExportImportService>();
-
             return Container.Resolve<Shell.Shell>();
         }
-
-        protected override void ConfigureServiceLocator()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         protected override void InitializeShell()
         {
             base.InitializeShell();
-            
-            Application.Current.MainWindow = (Window) Shell.Shell;
+
+            Application.Current.MainWindow = (Window) Shell;
             Application.Current.MainWindow.Show();
         }
 
@@ -59,7 +53,10 @@ namespace WinApp.Unity
 
         protected override void ConfigureModuleCatalog()
         {
-            //AddModule<GraphServiceModule>();
+            AddModule<CnsServiceModule>();
+            AddModule<WorldServiceModule>();
+            AddModule<SomeToolbarModule>();
+            AddModule<OutputScreenModule>();
         }
 
         private void AddModule<T>() where T : IModule

@@ -52,8 +52,20 @@
     <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
+      <HintPath>..\packages\Prism.UnityExtensions.5.0.1\lib\NET45\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -69,22 +81,22 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.DataGrid">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.2.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Shell\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -150,6 +163,22 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{cfaadaba-87a5-45c4-8fe5-4c48956314fc}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Regions\OutputScreen\OutputScreen.csproj">
+      <Project>{743F649D-E5D7-4F6C-90C6-4B86842715AC}</Project>
+      <Name>OutputScreen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Regions\SomeToolbar\SomeToolbar.csproj">
+      <Project>{F161B403-DC21-4008-B9F1-5653985AC802}</Project>
+      <Name>SomeToolbar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\CnsService\CnsService.csproj">
+      <Project>{4de58512-02d8-41e9-be66-fdf3b274bdc3}</Project>
+      <Name>CnsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\World\WorldService.csproj">
+      <Project>{BFDAE637-D564-425E-93A0-30BC54D9A9BF}</Project>
+      <Name>WorldService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
