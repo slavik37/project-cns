@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Regions;
 using Xceed.Wpf.AvalonDock.Layout;
 
-namespace MemOrg.WinApp.Avalon
+namespace WinApp.Avalon
 {
     class DocumentRegionAdapter : RegionAdapterBase<LayoutDocument>
     {

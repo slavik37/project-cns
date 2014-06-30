@@ -33,15 +33,15 @@
                     <layout:LayoutDocumentPaneGroup>
                         <layout:LayoutDocumentPane>
                             
-                            <layout:LayoutDocument Title="Graph"
-                                                   avalon:AvalonDockRegion.DocName ="{x:Static intr:RegionNames.MainViewRegion}">
+                            <layout:LayoutDocument Title="Output"
+                                                   avalon:AvalonDockRegion.DocName ="{x:Static intr:RegionNames.OutputScreenRegion}">
                             </layout:LayoutDocument>
                         </layout:LayoutDocumentPane>
                     </layout:LayoutDocumentPaneGroup>
                     </layout:LayoutPanel>
                     <layout:LayoutAnchorablePaneGroup DockWidth="150" Orientation="Vertical">
                         <layout:LayoutAnchorablePane>
-                            <layout:LayoutAnchorable Title="Tool 1">
+                            <layout:LayoutAnchorable Title="Tool 1" avalon:AvalonDockRegion.AnchorName="{x:Static intr:RegionNames.SomeToolbarRegion}">
                             </layout:LayoutAnchorable>
                             <layout:LayoutAnchorable Title="Tool 2">
                             </layout:LayoutAnchorable>
