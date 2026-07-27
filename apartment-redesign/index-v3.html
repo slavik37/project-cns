@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квартира №6 — единая концепция v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f2eee4;
+      --ink: #1a221e;
+      --muted: #5c675f;
+      --sage: #7a9e88;
+      --sage-soft: #d9e8df;
+      --oak: #c4a574;
+      --card: rgba(255,252,246,.9);
+      --line: rgba(26,34,30,.1);
+      --shadow: 0 14px 36px rgba(26,34,30,.07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Manrope, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, #fff8ea 0%, transparent 30%),
+        radial-gradient(circle at 90% 5%, #d9e8df 0%, transparent 24%),
+        linear-gradient(180deg, #f2eee4, #e8e1d3);
+      line-height: 1.55;
+    }
+    .wrap { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; }
+    h1,h2,h3 { font-family: Literata, serif; font-weight: 600; line-height: 1.15; margin: 0 0 .5rem; }
+    h1 { font-size: clamp(2rem, 4.5vw, 3.1rem); max-width: 16ch; }
+    h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); }
+    h3 { font-size: 1.15rem; }
+    .eyebrow { color: var(--sage); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; font-size: .75rem; }
+    .lead { color: var(--muted); max-width: 42rem; font-size: 1.05rem; }
+    header { padding: 3rem 0 1.5rem; }
+    section { padding: 2rem 0; }
+    .palette {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin: 1.2rem 0 0;
+    }
+    .swatch {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: .8rem; box-shadow: var(--shadow);
+    }
+    .chip { height: 42px; border-radius: 10px; margin-bottom: .5rem; border: 1px solid var(--line); }
+    .swatch span { font-size: .82rem; color: var(--muted); }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+      padding: 1rem; box-shadow: var(--shadow);
+    }
+    figure { margin: 0; }
+    figure img { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--line); }
+    figcaption { margin-top: .55rem; color: var(--muted); font-size: .9rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .span-2 { grid-column: 1 / -1; }
+    .tag {
+      display: inline-block; background: var(--sage-soft); color: var(--sage);
+      border-radius: 999px; padding: .15rem .55rem; font-size: .75rem; font-weight: 700;
+    }
+    ul { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    .note {
+      margin-top: 1rem; padding: 1rem; border-left: 3px solid var(--sage);
+      background: rgba(122,158,136,.1); border-radius: 0 12px 12px 0; color: var(--muted);
+    }
+    footer { padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; margin-top: 1rem; }
+    @media (max-width: 800px) {
+      .palette, .grid-2 { grid-template-columns: 1fr; }
+      .span-2 { grid-column: auto; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Квартира №6 · единая концепция v3</div>
+      <h1>Один план. Одна палитра. Всё совпадает.</h1>
+      <p class="lead">
+        Предыдущие версии выглядели как набор разных квартир. Здесь все виды собраны
+        от одного эталонного плана и одной отделки: тёплый белый, шалфей, светлый дуб, лён.
+      </p>
+      <div class="palette">
+        <div class="swatch"><div class="chip" style="background:#f7f4ef"></div><strong>Стены</strong><br /><span>тёплый белый</span></div>
+        <div class="swatch"><div class="chip" style="background:#7a9e88"></div><strong>Акцент</strong><br /><span>шалфей #7A9E88</span></div>
+        <div class="swatch"><div class="chip" style="background:#c4a574"></div><strong>Дерево</strong><br /><span>светлый дуб</span></div>
+        <div class="swatch"><div class="chip" style="background:#d9d2c5"></div><strong>Текстиль</strong><br /><span>лён бежевый</span></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Эталонный план</h2>
+      <p class="lead">От этой схемы считаются все интерьеры. Мебель на своих местах во всех картинках.</p>
+      <figure class="card">
+        <img src="images/v3/v3-master-plan.png" alt="Эталонный план" />
+        <figcaption>Эталон: детская слева внизу, гостиная-спальня справа, кухня-ниша у санузла, лоджия справа внизу</figcaption>
+      </figure>
+      <div class="grid-2" style="margin-top:1rem;">
+        <figure class="card">
+          <img src="images/v3/v3-before-after.png" alt="Было и стало" />
+          <figcaption>Было / стало — та же оболочка стен</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-furniture-plan.png" alt="План с мебелью" />
+          <figcaption>Та же расстановка с габаритами</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Аксонометрия</h2>
+      <figure class="card">
+        <img src="images/v3/v3-axon.png" alt="Аксонометрия" />
+        <figcaption>Объём в тех же материалах, что и интерьеры ниже</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Детская <span class="tag">~9 м²</span></h2>
+      <p class="lead">Кровать у левой стены, стол у окна, шкаф у двери. Дуб + шалфей, без «другой» розовой комнаты.</p>
+      <div class="grid-2">
+        <figure class="card">
+          <img src="images/v3/v3-int-girls-1.png" alt="Детская ракурс 1" />
+          <figcaption>От двери к окну</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-int-girls-2.png" alt="Детская ракурс 2" />
+          <figcaption>От окна к кровати</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Гостиная-спальня родителей <span class="tag">~12.5 м²</span></h2>
+      <p class="lead">Кровать у правой стены, диван к ТВ на перегородке, стол у кухни, выход на лоджию.</p>
+      <div class="grid-2">
+        <figure class="card">
+          <img src="images/v3/v3-int-parents-1.png" alt="Родители ракурс 1" />
+          <figcaption>Общий вид зон</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-int-parents-2.png" alt="Родители ракурс 2" />
+          <figcaption>От кровати к кухне-нише</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Кухня, прихожая, С/У, лоджия</h2>
+      <div class="grid-2">
+        <figure class="card">
+          <img src="images/v3/v3-int-kitchen.png" alt="Кухня" />
+          <figcaption>Кухня-ниша: фасады шалфей, столешница дуб</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-int-hall.png" alt="Прихожая" />
+          <figcaption>Прихожая: тот же пол и вид на кухню</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-int-bath.png" alt="Санузел" />
+          <figcaption>С/У в той же тёплой гамме</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="images/v3/v3-int-loggia.png" alt="Лоджия" />
+          <figcaption>Лоджия продолжает комнату родителей</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Спецификация</h2>
+      <figure class="card">
+        <img src="images/v3/v3-spec.png" alt="Спецификация мебели" />
+        <figcaption>Список мебели строго под эталонный план</figcaption>
+      </figure>
+      <div class="note">
+        Фиксированная схема: детская = бывшая кухня · родители = бывшая комната · кухня у санузла · лоджия = кабинет.
+        Все картинки v3 собраны от одного эталона, чтобы планировка и отделка совпадали.
+      </div>
+    </section>
+
+    <footer>
+      Квартира №6 · согласованная концепция v3 · семья 2 взрослых + 2 девочки<br />
+      <a href="index-v2.html" style="color:#7a9e88;">Архив v2</a> ·
+      <a href="index.html" style="color:#7a9e88;">Архив v1</a>
+    </footer>
+  </div>
+</body>
+</html>
