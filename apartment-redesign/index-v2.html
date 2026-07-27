@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квартира №6 — подробная перепланировка 1к → 2к</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f2eee4;
+      --bg2: #e8e1d3;
+      --ink: #1a221e;
+      --muted: #5c675f;
+      --accent: #2d6a54;
+      --accent2: #c4a574;
+      --soft: #d7ebe1;
+      --card: rgba(255, 252, 246, 0.88);
+      --line: rgba(26, 34, 30, 0.1);
+      --shadow: 0 16px 40px rgba(26, 34, 30, 0.07);
+      --warn: #8a5a2b;
+      --warn-bg: #f5ead8;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Manrope, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, #fff7e8 0%, transparent 32%),
+        radial-gradient(circle at 90% 8%, #dcefe6 0%, transparent 26%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height: 1.55;
+    }
+    .wrap { width: min(1160px, calc(100% - 2rem)); margin: 0 auto; }
+    h1, h2, h3 { font-family: Literata, serif; font-weight: 600; line-height: 1.18; margin: 0; }
+    h1 { font-size: clamp(2.1rem, 4.8vw, 3.4rem); max-width: 16ch; }
+    h2 { font-size: clamp(1.55rem, 2.8vw, 2.15rem); margin-bottom: 0.55rem; }
+    h3 { font-size: 1.2rem; margin-bottom: 0.35rem; }
+    p { margin: 0 0 0.85rem; }
+    a { color: var(--accent); }
+
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(242, 238, 228, 0.85);
+      border-bottom: 1px solid var(--line);
+      margin: 0 -1rem;
+      padding: 0.7rem 1rem;
+    }
+    .nav-inner {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: flex; gap: 0.85rem; flex-wrap: wrap;
+      font-size: 0.86rem; font-weight: 600;
+    }
+    .nav a { text-decoration: none; color: var(--muted); }
+    .nav a:hover { color: var(--accent); }
+
+    .hero { padding: 3.2rem 0 2rem; display: grid; gap: 1rem; }
+    .eyebrow {
+      color: var(--accent); font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; font-size: 0.75rem;
+    }
+    .lead { max-width: 46rem; color: var(--muted); font-size: 1.08rem; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.7rem; margin-top: 0.6rem;
+    }
+    .stat {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+      padding: 0.9rem 1rem; box-shadow: var(--shadow);
+    }
+    .stat strong { display: block; font-size: 1.3rem; }
+    .stat span { color: var(--muted); font-size: 0.82rem; }
+
+    section { padding: 2.3rem 0; }
+    .section-lead { color: var(--muted); max-width: 44rem; margin-bottom: 1.2rem; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+      padding: 1.15rem; box-shadow: var(--shadow);
+    }
+    figure { margin: 0; }
+    figure img {
+      width: 100%; display: block; border-radius: 14px; border: 1px solid var(--line);
+    }
+    figcaption { margin-top: 0.65rem; color: var(--muted); font-size: 0.9rem; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+    .span-2 { grid-column: 1 / -1; }
+
+    .steps { display: grid; gap: 0.75rem; counter-reset: step; }
+    .step {
+      display: grid; grid-template-columns: auto 1fr; gap: 0.9rem;
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1rem 1.1rem;
+    }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      width: 2rem; height: 2rem; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--soft); color: var(--accent); font-weight: 700; font-size: 0.9rem;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; font-size: 0.92rem;
+      background: var(--card); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    th, td { padding: 0.75rem 0.85rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: rgba(45, 106, 84, 0.08); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); }
+    tr:last-child td { border-bottom: 0; }
+    .muted { color: var(--muted); }
+
+    .tag {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
+      background: var(--soft); color: var(--accent); font-size: 0.75rem; font-weight: 700;
+    }
+    .note {
+      margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 0 14px 14px 0;
+      border-left: 3px solid var(--accent); background: rgba(45, 106, 84, 0.07); color: var(--muted);
+    }
+    .warn {
+      margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 14px;
+      background: var(--warn-bg); color: var(--warn); border: 1px solid rgba(138, 90, 43, 0.2);
+    }
+
+    .room-block { display: grid; gap: 1rem; margin-bottom: 2rem; }
+    .room-block .head { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: baseline; justify-content: space-between; }
+    .room-block .meta { color: var(--muted); font-size: 0.92rem; }
+
+    ul.checklist { margin: 0.4rem 0 0; padding-left: 1.15rem; color: var(--muted); }
+    ul.checklist li { margin: 0.25rem 0; }
+
+    footer {
+      padding: 2rem 0 3rem; margin-top: 1rem; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .stats, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .span-2 { grid-column: auto; }
+      h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Содержание">
+      <div class="nav-inner">
+        <a href="#concept">Концепция</a>
+        <a href="#before-after">До / После</a>
+        <a href="#axon">Аксонометрия</a>
+        <a href="#furniture">Мебель</a>
+        <a href="#rooms">По комнатам</a>
+        <a href="#works">Работы</a>
+        <a href="#spec">Спецификация</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">Квартира №6 · 1 этаж · подробная концепция v2</div>
+      <h1>Перепланировка 1к → 2к для семьи из 4</h1>
+      <p class="lead">
+        Две отдельные комнаты: детская для двух девочек и гостиная-спальня родителей.
+        Кухня вынесена в нишу к стоякам санузла. Лоджия утепляется под кабинет и хранение.
+        Ниже — сравнение «было/стало», покомнатные планы с габаритами, спецификация мебели
+        и визуализации всех зон.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong>2</strong><span>жилые комнаты</span></div>
+        <div class="stat"><strong>4</strong><span>человека</span></div>
+        <div class="stat"><strong>34.3</strong><span>м² без лоджии</span></div>
+        <div class="stat"><strong>38.4</strong><span>м² с лоджией</span></div>
+        <div class="stat"><strong>1 эт.</strong><span>проще согласовать кухню</span></div>
+      </div>
+    </header>
+
+    <section id="concept">
+      <h2>Логика перепланировки</h2>
+      <p class="section-lead">
+        Исходник — классическая однокомнатная: кухня 9.7, комната 15.2, санузел 4.3, прихожая 5.1, лоджия 4.1.
+        Для четверых нужны два спальных контура. Решение: комнату детям отдаём из кухни (там уже есть окно),
+        кухню переносим к мокрой зоне, большую комнату оставляем родителям как гостиную-спальню.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <div>
+            <h3>Санузел оставляем</h3>
+            <p class="muted">Стояки, ванна, унитаз и раковина на месте — не трогаем гидроизоляцию и канализацию стояка.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Кухня → ниша у санузла (~3.5 м²)</h3>
+            <p class="muted">Мойка и посудомойка ближе к стоякам. Варочная 2 конфорки, холодильник 600 мм, барная стойка на 2 стула. Вытяжка рециркуляционная.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Бывшая кухня → детская (~9.0 м²)</h3>
+            <p class="muted">Окно сохраняется. Двухъярусная кровать 900×2000, общий стол 1400×600 на двоих, шкаф и стеллаж.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Комната → гостиная-спальня родителей (~12.5 м²)</h3>
+            <p class="muted">Три зоны без капитальных стен: сон (кровать 1600×2000), гостиная (диван + ТВ), столовая (стол 1200×800 на 4).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Лоджия → кабинет и хранение (4.1 м²)</h3>
+            <p class="muted">Утепление, тёплый контур, стол у окна, встроенные шкафы. Полный снос подоконного блока — только после согласования.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="before-after">
+      <h2>Было / Стало</h2>
+      <p class="section-lead">Слева исходная 1к, справа целевая 2к. Красным — демонтаж перегородки кухни, зелёным — новая перегородка детской.</p>
+      <figure class="card">
+        <img src="images/v2/v2-before-after-plans.png" alt="Планы до и после перепланировки" />
+        <figcaption>Сравнение планировок: 1-комнатная → 2-комнатная для семьи 2+2</figcaption>
+      </figure>
+
+      <div style="margin-top:1rem; overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Зона</th>
+              <th>Было</th>
+              <th>Стало</th>
+              <th>Что делаем</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Кухня</td>
+              <td>9.7 м² отдельная</td>
+              <td>Ниша ~3.5 м² у С/У</td>
+              <td>Перенос мойки/плиты к стоякам</td>
+            </tr>
+            <tr>
+              <td>Комната</td>
+              <td>15.2 м² единственная</td>
+              <td>Гостиная-спальня ~12.5 м²</td>
+              <td>Зонирование мебелью + ковром</td>
+            </tr>
+            <tr>
+              <td>Детская</td>
+              <td>—</td>
+              <td>~9.0 м² (бывш. кухня)</td>
+              <td>Новая перегородка + дверь</td>
+            </tr>
+            <tr>
+              <td>Прихожая</td>
+              <td>5.1 м²</td>
+              <td>~5.0 м² + шкаф-купе</td>
+              <td>Часть площади под кухню-нишу</td>
+            </tr>
+            <tr>
+              <td>С/У</td>
+              <td>4.3 м²</td>
+              <td>4.3 м²</td>
+              <td>Без переноса стояков, косметика/замена сантехники</td>
+            </tr>
+            <tr>
+              <td>Лоджия</td>
+              <td>4.1 м² холодная</td>
+              <td>Кабинет + хранение</td>
+              <td>Утепление, розетки, шкафы</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn">
+        <strong>Согласование:</strong> перенос кухни и возведение/снос перегородок нужно согласовать
+        (проект перепланировки). На 1 этаже перенос кухни обычно допустим, если под квартирой нет жилых помещений.
+        Несущие стены не затрагиваются.
+      </div>
+    </section>
+
+    <section id="axon">
+      <h2>Аксонометрия всей квартиры</h2>
+      <p class="section-lead">Общий вид «крыша снята»: как комнаты стыкуются и куда встаёт мебель.</p>
+      <figure class="card">
+        <img src="images/v2/v2-axonometric-overview.png" alt="Аксонометрия квартиры после перепланировки" />
+        <figcaption>Аксонометрия после перепланировки с подписями зон</figcaption>
+      </figure>
+    </section>
+
+    <section id="furniture">
+      <h2>Общий план с габаритами мебели</h2>
+      <p class="section-lead">Все ключевые предметы подписаны с размерами в мм. Проходы заложены от 600–700 мм.</p>
+      <figure class="card">
+        <img src="images/v2/v2-furniture-dimensions.png" alt="Детальная расстановка мебели с габаритами" />
+        <figcaption>Сводный план мебели: детская, гостиная-спальня, кухня-ниша, лоджия, С/У</figcaption>
+      </figure>
+      <figure class="card" style="margin-top:1rem;">
+        <img src="images/v2/v2-plan-kitchen-hall.png" alt="Узел кухни-ниши и прихожей" />
+        <figcaption>Узел «кухня-ниша + прихожая»: привязка к стоякам, ряды гарнитура, проход ≥900 мм</figcaption>
+      </figure>
+    </section>
+
+    <section id="rooms">
+      <h2>По комнатам: планы и интерьеры</h2>
+
+      <article class="room-block">
+        <div class="head">
+          <h3>1. Детская для двух девочек</h3>
+          <span class="tag">~9.0 м² · бывшая кухня</span>
+        </div>
+        <p class="meta">Окно сохраняется. Спальные места — двухъярусная кровать, чтобы освободить пол под стол и игру.</p>
+        <div class="grid-2">
+          <figure class="card">
+            <img src="images/v2/v2-plan-girls-room.png" alt="План мебели детской" />
+            <figcaption>План мебели детской с габаритами и проходами</figcaption>
+          </figure>
+          <div class="card">
+            <h3>Состав</h3>
+            <ul class="checklist">
+              <li>Кровать двухъярусная 900×2000 с ящиками</li>
+              <li>Стол письменный 1400×600 на 2 места у окна</li>
+              <li>2 стула, 2 настольные лампы</li>
+              <li>Шкаф 1000×600×2400</li>
+              <li>Стеллаж 800×350, комод 800×400</li>
+              <li>Ковер 1500×1000, полки над столом</li>
+            </ul>
+            <div class="note">Свет: основной потолочный + бра у каждой полки кровати + две лампы на столе.</div>
+          </div>
+          <figure class="card">
+            <img src="images/v2/v2-interior-girls-1.png" alt="Интерьер детской ракурс 1" />
+            <figcaption>Ракурс от двери: кровать, стол у окна, шкаф</figcaption>
+          </figure>
+          <figure class="card">
+            <img src="images/v2/v2-interior-girls-2.png" alt="Интерьер детской ракурс 2" />
+            <figcaption>Ракурс от окна: два рабочих места и ярусная кровать</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="room-block">
+        <div class="head">
+          <h3>2. Гостиная-спальня родителей</h3>
+          <span class="tag">~12.5 м² · три зоны</span>
+        </div>
+        <p class="meta">Сон / гостиная / столовая в одном объёме. Границы зон — ковром, светом и расстановкой, без лишних стен.</p>
+        <div class="grid-2">
+          <figure class="card">
+            <img src="images/v2/v2-plan-parents-room.png" alt="План мебели гостиной-спальни" />
+            <figcaption>План с зонами: сон (синий), гостиная (зелёный), столовая (жёлтый)</figcaption>
+          </figure>
+          <div class="card">
+            <h3>Состав</h3>
+            <ul class="checklist">
+              <li>Кровать 1600×2000 + 2 тумбы 400×400</li>
+              <li>Шкаф 1200×600 (или купе до потолка)</li>
+              <li>Диван 1600×900, ковер 2000×1400</li>
+              <li>ТВ 43″ + тумба 1200×400</li>
+              <li>Стол обеденный 1200×800 (раскладка до ~1600)</li>
+              <li>4 стула; проход к лоджии свободен</li>
+            </ul>
+            <div class="note">Вечером сцена «сон»: только бра у кровати. Днём — общий свет + торшер у дивана.</div>
+          </div>
+          <figure class="card">
+            <img src="images/v2/v2-interior-parents-1.png" alt="Интерьер родителей ракурс 1" />
+            <figcaption>Общий вид: кровать, диван, ТВ, стол</figcaption>
+          </figure>
+          <figure class="card">
+            <img src="images/v2/v2-interior-parents-2.png" alt="Интерьер родителей ракурс 2" />
+            <figcaption>Вид от кровати к столовой и кухне-нише</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="room-block">
+        <div class="head">
+          <h3>3. Кухня-ниша и прихожая</h3>
+          <span class="tag">кухня ~3.5 м² · прихожая ~5 м²</span>
+        </div>
+        <div class="grid-2">
+          <figure class="card">
+            <img src="images/v2/v2-interior-kitchen.png" alt="Интерьер кухни-ниши" />
+            <figcaption>Кухня: шалфейный фасад, дубовая столешница, бар на 2</figcaption>
+          </figure>
+          <figure class="card">
+            <img src="images/v2/v2-interior-hallway.png" alt="Интерьер прихожей" />
+            <figcaption>Прихожая: шкаф-купе с зеркалом, обувница-скамья</figcaption>
+          </figure>
+        </div>
+        <div class="card" style="margin-top:1rem;">
+          <div class="grid-2">
+            <div>
+              <h3>Кухня — техника</h3>
+              <ul class="checklist">
+                <li>Холодильник 600×600</li>
+                <li>Варочная 2 конфорки (индукция)</li>
+                <li>Мойка + смеситель</li>
+                <li>ПММ 450 мм</li>
+                <li>Вытяжка рециркуляция</li>
+                <li>Барная стойка 1200×400 + 2 стула</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Прихожая — хранение</h3>
+              <ul class="checklist">
+                <li>Шкаф-купе 1800×600 до потолка</li>
+                <li>Обувница 800×350 с сиденьем</li>
+                <li>Крючки / консоль для ключей</li>
+                <li>Проход к комнатам без узких «горлышек»</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="room-block">
+        <div class="head">
+          <h3>4. Санузел и лоджия</h3>
+          <span class="tag">С/У 4.3 м² · лоджия 4.1 м²</span>
+        </div>
+        <div class="grid-2">
+          <figure class="card">
+            <img src="images/v2/v2-interior-bathroom.png" alt="Интерьер санузла" />
+            <figcaption>С/У: ванна 1700, подвесной унитаз, тумба, место под СМА</figcaption>
+          </figure>
+          <figure class="card">
+            <img src="images/v2/v2-interior-loggia.png" alt="Интерьер лоджии" />
+            <figcaption>Лоджия: рабочий стол у окна + шкафы для хранения</figcaption>
+          </figure>
+        </div>
+      </article>
+    </section>
+
+    <section id="works">
+      <h2>Состав работ (эскизно)</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Демонтаж</h3>
+          <ul class="checklist">
+            <li>Перегородка/часть стены бывшей кухни</li>
+            <li>Старая отделка по необходимости</li>
+            <li>Старая кухонная разводка (после согласования)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Новое</h3>
+          <ul class="checklist">
+            <li>Каркасная перегородка детской + звукоизоляция</li>
+            <li>Дверь в детскую 700–800 мм</li>
+            <li>Кухонная ниша: вода, канализация, электрика</li>
+            <li>Утепление лоджии, розетки, свет</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Отделка</h3>
+          <ul class="checklist">
+            <li>Единый светлый пол (дуб/инженерка)</li>
+            <li>Стены: тёплый белый + шалфейный акцент</li>
+            <li>Потолок: натяжной/ГКЛ с сценариями света</li>
+            <li>С/У: керамогранит, гидроизоляция</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        Это концепция для обсуждения. Перед ремонтом нужен обмерный план, проект перепланировки
+        и проверка возможности переноса кухни в вашем регионе/Жилищной инспекции.
+      </div>
+    </section>
+
+    <section id="spec">
+      <h2>Спецификация мебели</h2>
+      <p class="section-lead">Сводный список с ориентировочными габаритами — удобно брать с собой в магазин или отдавать корпуснику.</p>
+      <figure class="card">
+        <img src="images/v2/v2-furniture-spec.png" alt="Спецификация мебели" />
+        <figcaption>Спецификация по зонам: детская, гостиная-спальня, кухня, прихожая, лоджия, С/У</figcaption>
+      </figure>
+
+      <div style="margin-top:1rem; overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Зона</th>
+              <th>Предмет</th>
+              <th>Габарит</th>
+              <th>Кол-во</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Детская</td><td>Кровать двухъярусная</td><td>900×2000</td><td>1</td></tr>
+            <tr><td>Детская</td><td>Стол письменный</td><td>1400×600</td><td>1</td></tr>
+            <tr><td>Детская</td><td>Стул</td><td>—</td><td>2</td></tr>
+            <tr><td>Детская</td><td>Шкаф</td><td>1000×600×2400</td><td>1</td></tr>
+            <tr><td>Детская</td><td>Стеллаж / комод</td><td>800×350 / 800×400</td><td>1+1</td></tr>
+            <tr><td>Родители</td><td>Кровать</td><td>1600×2000</td><td>1</td></tr>
+            <tr><td>Родители</td><td>Тумба прикроватная</td><td>400×400</td><td>2</td></tr>
+            <tr><td>Родители</td><td>Шкаф</td><td>1200×600</td><td>1</td></tr>
+            <tr><td>Родители</td><td>Диван</td><td>1600×900</td><td>1</td></tr>
+            <tr><td>Родители</td><td>Стол обеденный</td><td>1200×800</td><td>1</td></tr>
+            <tr><td>Родители</td><td>Стул обеденный</td><td>—</td><td>4</td></tr>
+            <tr><td>Кухня</td><td>Гарнитур L / ряд</td><td>~2400 мм</td><td>1</td></tr>
+            <tr><td>Кухня</td><td>Холодильник / ПММ / варочная</td><td>600 / 450 / 2 конф.</td><td>по 1</td></tr>
+            <tr><td>Прихожая</td><td>Шкаф-купе</td><td>1800×600</td><td>1</td></tr>
+            <tr><td>Лоджия</td><td>Стол + встроенные шкафы</td><td>1000×500 + ~2 м</td><td>1 комплект</td></tr>
+            <tr><td>С/У</td><td>Ванна / тумба / СМА</td><td>1700 / 600 / 600</td><td>по 1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      Квартира №6 · подробная концепция перепланировки v2 · семья: 2 взрослых + 2 девочки.<br />
+      Эскизы для обсуждения. Финальные размеры — только после обмера на объекте.
+      <br /><br />
+      <a href="index.html">← Краткая версия v1</a>
+    </footer>
+  </div>
+</body>
+</html>
